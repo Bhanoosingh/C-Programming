@@ -22,6 +22,7 @@ student *add(student *prev){
 
 	printf("\nStudent RollNo:-%d\nStudent name:-%s\n",newstud->rollno,newstud->name);
 
+
 	if(prev!=NULL)
 	{
 		prev->next=newstud;
@@ -30,8 +31,28 @@ student *add(student *prev){
 	return newstud;
 }
 
-void del(){
+void del(student *head,int position)
+{
+	student *deleteMe=NULL;
+	student *holdMe=head;
+	//student *test=NULL;
+	int i;
 	printf("\nDelete student....\n");
+	for(i=1;i<position-1;i++)
+	{
+		holdMe=holdMe->next;
+	}
+	printf("\nStudent To be Deleted\n");
+	deleteMe=holdMe->next;
+	printf("RollNo:%d  Name:%s",deleteMe->rollno,deleteMe->name);
+	//printf("\nSafe location\n");
+	//printf("RollNo:%d  Name:%s",holdMe->rollno,holdMe->name);
+	//test=holdMe->next=deleteMe->next;
+	holdMe->next=deleteMe->next;
+	//printf("\nHoldMe next Value\n");
+	//printf("RollNo:%d  Name:%s",test->rollno,test->name);
+	free(deleteMe);
+
 }
 void print(student *currentstud)
 {       int count=0;
@@ -62,7 +83,7 @@ void main(){
 
 	student *head=NULL;
 	student *newest=NULL;
-
+	int pos=0;
 	clrscr();
 	scanf("%s",command);
 	while(strcmp(command,"quit")!=0)
@@ -85,7 +106,12 @@ void main(){
 		}
 		else if(strcmp(command,"del")==0)
 		{
-		    del();
+		    print(head);
+		    printf("\n\nEnter Which student you want to delete:-");
+		    scanf("%d",&pos);
+		    del(head,pos);
+		    printf("\nNew List:-\n");
+		    print(head);
 		}
 		else
 		{
